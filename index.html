@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Click Frenzy Game 🎯</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top, #1a2a6c, #b21f1f, #fdbb2d);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .game {
+      background: rgba(0, 0, 0, 0.45);
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      width: 350px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 30px;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      margin: 15px 0;
+      font-size: 16px;
+    }
+
+    #circle {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #00f260, #0575e6);
+      border-radius: 50%;
+      margin: 30px auto;
+      cursor: pointer;
+      transition: transform 0.1s ease;
+    }
+
+    #circle:active {
+      transform: scale(0.9);
+    }
+
+    button {
+      padding: 12px 22px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      background: linear-gradient(to right, #ff512f, #dd2476);
+      color: white;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    footer {
+      margin-top: 20px;
+      font-size: 12px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <div class="game">
+    <h1>🎯 Click Frenzy</h1>
+    <p>Click the circle as fast as you can!</p>
+
+    <div class="stats">
+      <div>Score: <span id="score">0</span></div>
+      <div>Time: <span id="time">10</span>s</div>
+    </div>
+
+    <div id="circle" onclick="hit()"></div>
+
+    <button onclick="startGame()">Start / Restart</button>
+
+    <footer>Pure HTML • CSS • JS</footer>
+  </div>
+
+  <script>
+    let score = 0;
+    let timeLeft = 10;
+    let timer;
+    let playing = false;
+
+    function startGame() {
+      score = 0;
+      timeLeft = 10;
+      playing = true;
+      document.getElementById('score').innerText = score;
+      document.getElementById('time').innerText = timeLeft;
+
+      clearInterval(timer);
+      timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById('time').innerText = timeLeft;
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          playing = false;
+          alert('Game Over! Your score: ' + score);
+        }
+      }, 1000);
+    }
+
+    function hit() {
+      if (!playing) return;
+      score++;
+      document.getElementById('score').innerText = score;
+
+      const circle = document.getElementById('circle');
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 200 - 100;
+      circle.style.transform = `translate(${x}px, ${y}px)`;
+    }
+  </script>
+</body>
+</html>
